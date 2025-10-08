@@ -20,6 +20,33 @@ class XboxController:
         except OSError as e:
             print(f"Error opening device: {e}")
             self.device = None
+    #     self.connect_first_controller()
+
+    # def connect_first_controller(self):
+    #     devices = hid.enumerate()
+    #     controller = None
+
+    #     for d in devices:
+    #         usage = d.get("usage")
+    #         product = d.get("product_string") or ""
+    #         # 判断是否是手柄：usage=5 或者名字里包含 Controller/Gamepad
+    #         if ("Controller" in product or "Gamepad" in product):
+    #             controller = d
+    #             break
+    #     if controller:
+    #         try:
+    #             self.device = hid.device()
+    #             self.device.open(controller["vendor_id"], controller["product_id"])
+    #             self.device.set_nonblocking(True)
+    #             print("✅ Connected:",
+    #                   controller.get("manufacturer_string"),
+    #                   controller.get("product_string"))
+    #         except OSError as e:
+    #             print(f"❌ Error opening device: {e}")
+    #             self.device = None
+    #     else:
+    #         print("⚠️ 没有找到手柄设备")
+    #         self.device = None
 
     def close(self):
         if self.device: self.device.close()
@@ -152,6 +179,11 @@ if __name__ == "__main__":
             key=Key.right,
             modifier=Key.cmd # On Windows, use Key.ctrl
         ),
+        KeyboardAction(
+            controller_button='RIGHT',
+            key=Key.right,
+        ),
+        KeyboardAction(controller_button='LEFT',key=Key.left),
     ]
 
     try:
